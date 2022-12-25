@@ -26,16 +26,7 @@ public class ProxyService {
                                                  HttpServletResponse response,
                                                  String traceId) throws URISyntaxException {
         ThreadContext.put("traceId", traceId);
-        String requestUrl = request.getRequestURI();
-        String SCHEME = "http";
-        String DOMAIN = "localhost";
-        int DOMAIN_PORT = 80;
-        URI uri = new URI(SCHEME, null, DOMAIN, DOMAIN_PORT, null, null, null);
-
-        uri = UriComponentsBuilder.fromUri(uri)
-                .path(requestUrl)
-                .query(request.getQueryString())
-                .build(true).toUri();
+        URI uri = createUri(request);
 
         HttpHeaders headers = new HttpHeaders();
         Enumeration<String> headerNames = request.getHeaderNames();
@@ -60,5 +51,19 @@ public class ProxyService {
                     .headers(e.getResponseHeaders())
                     .body(e.getResponseBodyAsString());
         }
+    }
+
+    private static URI createUri(HttpServletRequest request) throws URISyntaxException {
+        String requestUrl = request.getRequestURI();
+        String SCHEME = "http";
+        String DOMAIN = "localhost";
+        int DOMAIN_PORT = 80;
+        URI uri = new URI(SCHEME, null, DOMAIN, DOMAIN_PORT, null, null, null);
+
+        uri = UriComponentsBuilder.fromUri(uri)
+                .path(requestUrl)
+                .query(request.getQueryString())
+                .build(true).toUri();
+        return uri;
     }
 }
