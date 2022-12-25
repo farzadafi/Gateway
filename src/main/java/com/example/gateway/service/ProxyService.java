@@ -28,16 +28,7 @@ public class ProxyService {
         ThreadContext.put("traceId", traceId);
         URI uri = createUri(request);
 
-        HttpHeaders headers = new HttpHeaders();
-        Enumeration<String> headerNames = request.getHeaderNames();
-
-        while (headerNames.hasMoreElements()) {
-            String headerName = headerNames.nextElement();
-            headers.set(headerName, request.getHeader(headerName));
-        }
-
-        headers.set("TRACE", traceId);
-        headers.remove(HttpHeaders.ACCEPT_ENCODING);
+        HttpHeaders headers = createHttpHeaders(request, traceId);
 
         HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);
         ClientHttpRequestFactory factory = new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory());
@@ -53,7 +44,21 @@ public class ProxyService {
         }
     }
 
-    private static URI createUri(HttpServletRequest request) throws URISyntaxException {
+    private HttpHeaders createHttpHeaders(HttpServletRequest request, String traceId) {
+        HttpHeaders headers = new HttpHeaders();
+        Enumeration<String> headerNames = request.getHeaderNames();
+
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            headers.set(headerName, request.getHeader(headerName));
+        }
+
+        headers.set("TRACE", traceId);
+        headers.remove(HttpHeaders.ACCEPT_ENCODING);
+        return headers;
+    }
+
+    private URI createUri(HttpServletRequest request) throws URISyntaxException {
         String requestUrl = request.getRequestURI();
         String SCHEME = "http";
         String DOMAIN = "localhost";
