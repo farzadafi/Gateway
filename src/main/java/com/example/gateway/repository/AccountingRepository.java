@@ -1,4 +1,7 @@
 package com.example.gateway.repository;
 
-public interface AccountingRepository {
+import com.example.gateway.model.Accounting;
+import org.springframework.data.repository.CrudRepository;
+
+public interface AccountingRepository extends CrudRepository<Accounting,String> {
 }
