@@ -37,4 +37,11 @@ public class AccountingServiceImpel implements AccountingService {
         }
         return ipAddress;
     }
+
+    public String getCurrentUser(HttpServletRequest request) {
+        String currentUser = "anonymous";
+        if (request.getUserPrincipal() != null)
+            currentUser = request.getUserPrincipal().toString();
+        return currentUser;
+    }
 }
