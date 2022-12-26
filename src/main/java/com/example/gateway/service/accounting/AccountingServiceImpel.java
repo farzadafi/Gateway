@@ -5,6 +5,7 @@ import com.example.gateway.repository.AccountingRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.LocalDateTime;
+import java.util.Enumeration;
 
 public class AccountingServiceImpel implements AccountingService {
 
@@ -43,5 +44,22 @@ public class AccountingServiceImpel implements AccountingService {
         if (request.getUserPrincipal() != null)
             currentUser = request.getUserPrincipal().toString();
         return currentUser;
+    }
+
+    public String getRequestParameter(HttpServletRequest request) {
+        StringBuilder requestParameter = new StringBuilder();
+        Enumeration<String> parameterNames = request.getParameterNames();
+
+        while (parameterNames.hasMoreElements()) {
+            String paramName = parameterNames.nextElement();
+            requestParameter.append(paramName);
+            requestParameter.append("=");
+            String[] paramValues = request.getParameterValues(paramName);
+            for (String paramValue : paramValues) {
+                requestParameter.append(paramValue);
+                requestParameter.append("/");
+            }
+        }
+        return String.valueOf(requestParameter);
     }
 }

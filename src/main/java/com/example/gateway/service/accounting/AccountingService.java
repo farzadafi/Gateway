@@ -10,4 +10,5 @@ public interface AccountingService {
 
     String getCurrentUser(HttpServletRequest request);
 
+    String getRequestParameter(HttpServletRequest request);
 }
