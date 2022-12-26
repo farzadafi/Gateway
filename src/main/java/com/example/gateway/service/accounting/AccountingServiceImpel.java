@@ -29,4 +29,12 @@ public class AccountingServiceImpel implements AccountingService {
 
         repository.save(accounting);
     }
+
+    public String getIpAddress(HttpServletRequest request) {
+        String ipAddress = request.getHeader("X-FORWARDED-FOR");
+        if (ipAddress == null || "".equals(ipAddress)) {
+            ipAddress = request.getRemoteAddr();
+        }
+        return ipAddress;
+    }
 }
