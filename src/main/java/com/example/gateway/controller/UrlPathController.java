@@ -1,6 +1,7 @@
 package com.example.gateway.controller;
 
 import com.example.gateway.dto.UrlPathDto;
+import com.example.gateway.dto.UrlPathWrapper;
 import com.example.gateway.mapper.UrlPathMapper;
 import com.example.gateway.model.UrlPath;
 import com.example.gateway.service.urlPath.UrlPathServiceImpel;
@@ -21,6 +22,12 @@ public class UrlPathController {
     public String addUrlPath(@RequestBody UrlPathDto urlPathDto) {
         UrlPath urlPath = UrlPathMapper.INSTANCE.dtoToModel(urlPathDto);
         urlPathServiceImpel.save(urlPath);
+        return "OK";
+    }
+
+    @PostMapping("/urlPath/addAll") //send json Array with name urlPaths :)
+    public String saveAll(@RequestBody UrlPathWrapper urlPathWrapper) {
+        urlPathServiceImpel.saveAll(urlPathWrapper);
         return "OK";
     }
 }
