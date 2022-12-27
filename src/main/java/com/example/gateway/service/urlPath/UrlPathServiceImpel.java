@@ -2,7 +2,9 @@ package com.example.gateway.service.urlPath;
 
 import com.example.gateway.model.UrlPath;
 import com.example.gateway.repository.UrlPathRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UrlPathServiceImpel implements UrlPathService{
 
     private final UrlPathRepository repository;
