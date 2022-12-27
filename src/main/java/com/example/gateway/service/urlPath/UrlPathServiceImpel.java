@@ -5,6 +5,8 @@ import com.example.gateway.model.UrlPath;
 import com.example.gateway.repository.UrlPathRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UrlPathServiceImpel implements UrlPathService{
 
@@ -23,5 +25,10 @@ public class UrlPathServiceImpel implements UrlPathService{
     public void saveAll(UrlPathWrapper urlPathWrapper) {
         Iterable<UrlPath> iterable = urlPathWrapper.getUrlPaths();
         repository.saveAll(iterable);
+    }
+
+    @Override
+    public Optional<UrlPath> findBySource(String source) {
+        return repository.findById(source);
     }
 }
