@@ -1,6 +1,7 @@
 package com.example.gateway.controller;
 
 import com.example.gateway.exception.InvalidRequestException;
+import com.example.gateway.exception.MethodNotAllowedException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -29,4 +30,10 @@ public class Utility {
                 .map(f -> f + "=")
                 .collect(Collectors.toList());
     }
+
+    public void checkMethod(String expectedMethod, String actualMethod) {
+        if (!actualMethod.equals(expectedMethod))
+            throw new MethodNotAllowedException("send valid method");
+    }
+
 }
