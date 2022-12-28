@@ -15,8 +15,7 @@ public class TestController {
     }
 
     public ResponseEntity<String> test(String queryParameter, String body, String method) {
-        if (method.equals("GET"))
-            return (ResponseEntity<?>) ResponseEntity.badRequest();
+        utility.checkMethod("GET", method);
         if (queryParameter == null)
             throw new InvalidRequestException("send valid parameter");
 
