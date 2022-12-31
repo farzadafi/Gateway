@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.UUID;
 
@@ -26,7 +27,7 @@ public class ReverseController {
     public ResponseEntity<?> reverseProxyMethod(@RequestBody(required = false) String body,
                                               HttpMethod method,
                                               HttpServletRequest request,
-                                              HttpServletResponse response) throws URISyntaxException {
+                                              HttpServletResponse response) throws URISyntaxException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         accountingServiceImpel.save(request,method.toString(),body);
         return proxyService.processProxyRequest(body, method, request, response, UUID.randomUUID().toString());
     }
